@@ -1,5 +1,4 @@
-# Summary of RFC's I Gone Through
+# Summary of RFCs I Gone Through
 
-<ol>
-  <li><a href="/rfcs/abnf.html"> ABNF</a></li>
-</ol>
+1. [ABNF](/rfcs/abnf.html) RFC 5234
+2. [MUST, MUST NOT , ...](/rfcs/rfc2119.html) RFC 2119
