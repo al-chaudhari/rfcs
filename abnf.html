@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>ABNF</title></head>
+<body><div>[TOC]</div>
+<h1>ABNF</h1>
+<p>Specification of ABNF</p>
+<h2>Naming Rule / Variables</h2>
+<p>Rules are Case Insensitive and named in brackets like <rulename> , <Rulename>. They are case insensitive hence both the rules are equal</p>
+<p>While using these rulename the Angule Brackets are Not required</p>
+<p>&nbsp;</p>
+<h2>Rule form</h2>
+<pre><code class='language-bnf' lang='bnf'>name = elements crlf
+</code></pre>
+<p>Here,</p>
+<ol>
+<li>elements = one or more rules</li>
+<li>crlf = carriage return followed by line feed /r/n</li>
+
+</ol>
+<p>&nbsp;</p>
+<h2>Terminal Values</h2>
+<p>Terminal values are literals like that we understand in programming.</p>
+<p>b = binary</p>
+<p>d = decimal</p>
+<p>x = hexadecimal</p>
+<p>Hence </p>
+<p>CR = %d13</p>
+<p>CR = %x0D</p>
+<p>&nbsp;</p>
+<h3>Concatination is Showed by (.) Operators</h3>
+<p>CRLF = %d13.10</p>
+<h3>Strings are valid under Double Quote(&#39;&#39;....&quot;)</h3>
+<p>command = &quot;command string&quot;</p>
+<p>But problem with the <strong>string commands is that they are case insensitive</strong> so</p>
+<p>rule = &quot;ABC&quot; will match all &quot;abc&quot;, &quot;ABc&quot;....</p>
+<p>in order to specificy <strong>case sensitive command use direct numerical values</strong></p>
+<p>rulename = %97.98.99 </p>
+<p>&nbsp;</p>
+<h2>Operators</h2>
+<p>Operators are used to create more complex Rules</p>
+<h3>Concatenation</h3>
+<p>Creation of rule by concatinating one or more fule</p>
+<pre><code class='language-bnf' lang='bnf'>foo = %61
+bar = %62
+mumble = foo bar foo
+</code></pre>
+<p>&nbsp;</p>
+<h3>Alternative</h3>
+<p>Creation of rule by chosing from one of the many rules</p>
+<pre><code class='language-bnf' lang='bnf'>foo/bar 
+</code></pre>
+<p>Either choose foo or bar</p>
+<p>&nbsp;</p>
+<h3>Spending Alternative into many lines with =/</h3>
+<pre><code class='language-bnf' lang='bnf'>rule = a / b / c
+rule =/ d / e / f
+</code></pre>
+<p>The above line is same as</p>
+<pre><code class='language-bnf' lang='bnf'>rule = a / b / c / d / e / f
+</code></pre>
+<p>But i like second one...</p>
+<p>&nbsp;</p>
+<h3>Value Range Alternative : %c##-##</h3>
+<p>What if you want to say that you are using a-z then you will use something like this</p>
+<p>DIGIT = %x30-39</p>
+<p>which is equivilant to saying</p>
+<pre><code>DIGIT = &quot;0&quot; / &quot;1&quot; / &quot;2&quot; / &quot;3&quot; / &quot;4&quot; / &quot;5&quot; / &quot;6&quot; / &quot;7&quot; / &quot;8&quot; / &quot;9&quot;
+</code></pre>
+<p>&nbsp;</p>
+<h3>Sequence Grouping with()</h3>
+<p>Try to Group elements with ()</p>
+<pre><code class='language-bahs' lang='bahs'>rule = elm(foo/bar) blat
+</code></pre>
+<p>Above Rule is Equal to </p>
+<pre><code class='language-shell' lang='shell'>rule = elm foo blat / elm bar blat
+</code></pre>
+<h3>Variable Repetation a*b<rule></h3>
+<p>Repetation of Rule is specified as follows</p>
+<pre><code class='language-shell' lang='shell'>1*element == 1-INFINITY elements
+*elements == 0-INFINITY elements
+1*2elements == 1 - 2 elements
+4-4elements == 4 elements
+</code></pre>
+<h3>Specific Repeatition with n<rule></h3>
+<p>Above</p>
+<pre><code class='language-shell' lang='shell'>5-5element == 5 element
+</code></pre>
+<p>can be written as</p>
+<pre><code class='language-text' lang='text'>5element
+</code></pre>
+<h3>Optional Element 0-1<rule> with [<rule>]</h3>
+<p>Square Bracket to Specify Optional RUle</p>
+<pre><code class='language-shell' lang='shell'>[foo]
+</code></pre>
+<h3>Comment</h3>
+<p>Comment can be done with <code>;</code></p>
+<pre><code class='language-shell' lang='shell'>CRLF = %d13.10   ; \r\n
+</code></pre>
+<h2>Some Predefined Rules</h2>
+<pre><code>ALPHA = %x41-5A / %x61-7A   								`; A-Z / a-z
+
+BIT            =  &quot;0&quot; / &quot;1&quot; 								 ; Binary
+
+CHAR           =  %x01-7F   								 ; Ascii
+
+CR             =  %x0D										 ; \r
+
+LF             =  %x0A										 ; \n
+
+CRLF           =  CR LF										 ; \r\n
+
+CTL            =  %x00-1F / %x7F 							 ; Control Char
+
+DIGIT          =  %x30-39									 ; 0-9
+
+DQUOTE         =  %x22										 ; &quot;&quot;
+	
+HEXDIG         =  DIGIT / &quot;A&quot; / &quot;B&quot; / &quot;C&quot; / &quot;D&quot; / &quot;E&quot; / &quot;F&quot;  ; Hexadecimal Digit
+
+HTAB           =  %x09										 ; Horizontal Tab
+
+LWSP           =  *(WSP / CRLF WSP)							 ; Linear Whitespace
+
+OCTET          =  %x00-FF									 ; Octet Value
+
+SP             =  %x20										 ; Space 									 
+VCHAR          =  %x21-7E									 ; Visible Printing 															   Character
+
+WSP            =  SP / HTAB									 ; Whitespace
+</code></pre>
+<p>&nbsp;</p>
+<h1>Reference</h1>
+<ol>
+<li>Augmented BNF for Syntax Specifications: ABNF by ietf Can be Found at <a href='https://tools.ietf.org/html/rfc5234' target='_blank' class='url'>https://tools.ietf.org/html/rfc5234</a></li>
+
+</ol>
+</body>
+</html>
